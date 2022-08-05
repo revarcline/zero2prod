@@ -19,5 +19,5 @@ async fn health_check_works() {
 
 // launch in background somewhere
 async fn spawn_app() -> std::io::Result<()> {
-    todo!()
+    zero2prod::run().await
 }
