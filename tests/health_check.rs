@@ -1,6 +1,23 @@
-use zero2prod::main;
+#[tokio::test]
+async fn health_check_works() {
+    // Arrange
+    spawn_app().await.expect("Failed to spawn our app.");
+    // use reqwest to perform HTTP requests against application
+    let client = reqwest::Client::new();
 
-#[test]
-fn dummy_test() {
-    main()
+    // Act
+    let response = client
+        .get("http://127.0.0.1:8000/health_check")
+        .send()
+        .await
+        .expect("Failed to execute request");
+
+    // Assert
+    assert!(response.status().is_success());
+    assert_eq!(Some(0), response.content_length())
+}
+
+// launch in background somewhere
+async fn spawn_app() -> std::io::Result<()> {
+    todo!()
 }
